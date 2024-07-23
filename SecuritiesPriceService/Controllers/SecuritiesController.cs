@@ -17,6 +17,13 @@ namespace BNP.SecuritiesPriceService.Controllers
             _securityService = securityService;
         }
 
+        /// <summary>
+        /// Retrieves and stores prices for the provided list of ISINs.
+        /// </summary>
+        /// <param name="isins">A list of ISINs for which the prices are to be retrieved.</param>
+        /// <returns>A response indicating the success or failure of the operation.</returns>
+        /// <response code="200">Prices retrieved and stored successfully.</response>
+        /// <response code="500">Internal server error if something goes wrong.</response>
         [HttpPost("retrieve-prices")]
         public async Task<IActionResult> RetrievePrices([FromBody] List<string> isins)
         {
@@ -31,6 +38,13 @@ namespace BNP.SecuritiesPriceService.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the current price for the specified ISIN.
+        /// </summary>
+        /// <param name="isin">The ISIN for which to retrieve the price.</param>
+        /// <returns>The current price for the specified ISIN.</returns>
+        /// <response code="200">Returns the current price for the specified ISIN.</response>
+        /// <response code="500">Internal server error if something goes wrong.</response>
         [HttpGet("price/{isin}")]
         public async Task<IActionResult> GetPrice(string isin)
         {
@@ -45,6 +59,14 @@ namespace BNP.SecuritiesPriceService.Controllers
             }
         }
 
+        /// <summary>
+        /// Saves a new security to the database.
+        /// </summary>
+        /// <param name="security">The security object to be saved.</param>
+        /// <returns>A response indicating the success or failure of the operation.</returns>
+        /// <response code="200">Security saved successfully.</response>
+        /// <response code="400">Bad request if the security data is invalid.</response>
+        /// <response code="500">Internal server error if something goes wrong.</response>
         [HttpPost("save-security")]
         public async Task<IActionResult> SaveSecurity([FromBody] Security security)
         {
