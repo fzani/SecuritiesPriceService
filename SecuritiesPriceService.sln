@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecuritiesPriceService", "SecuritiesPriceService\SecuritiesPriceService.csproj", "{DF886E62-3A5B-4AA3-BA1B-0E838446DDB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecuritiesPriceService.Tests", "SecuritiesPriceService.Tests\SecuritiesPriceService.Tests.csproj", "{8694A7CF-B32E-4E3C-ABC5-90DDED64BA5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DF886E62-3A5B-4AA3-BA1B-0E838446DDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF886E62-3A5B-4AA3-BA1B-0E838446DDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF886E62-3A5B-4AA3-BA1B-0E838446DDB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8694A7CF-B32E-4E3C-ABC5-90DDED64BA5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8694A7CF-B32E-4E3C-ABC5-90DDED64BA5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8694A7CF-B32E-4E3C-ABC5-90DDED64BA5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8694A7CF-B32E-4E3C-ABC5-90DDED64BA5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
