@@ -1,7 +1,8 @@
 
-namespace BNP.SecuritiesPriceService.Services;
-
-public interface ISecurityService
+namespace BNP.SecuritiesPriceService.Services
 {
-    Task RetrieveAndStorePricesAsync(IEnumerable<string> isins);
+    public interface ISecurityService
+    {
+        Task RetrieveAndStorePricesAsync(IEnumerable<string> isins);
+    }
 }

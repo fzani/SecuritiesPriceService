@@ -1,15 +1,25 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using BNP.SecuritiesPriceService.Data;
+using BNP.SecuritiesPriceService.Repositories;
+using BNP.SecuritiesPriceService.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configure services
+builder.Services.AddSingleton<SecuritiesDbContext>(provider => new SecuritiesDbContext());
+
+builder.Services.AddScoped<ISecurityRepository, SecurityRepository>();
+builder.Services.AddScoped<ISecurityService, SecurityService>();
+builder.Services.AddHttpClient<ISecurityService, SecurityService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,9 +27,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
