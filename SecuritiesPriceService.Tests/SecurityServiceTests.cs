@@ -4,6 +4,7 @@ using BNP.SecuritiesPriceService.Services;
 using Moq;
 using Moq.Contrib.HttpClient;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -49,5 +50,50 @@ namespace YourNamespace.Tests
             // Assert
             _mockRepo.Verify(repo => repo.SaveSecurityAsync(It.IsAny<Security>()), Times.Exactly(isins.Count));
         }
+
+        [Fact]
+        public async Task GetPriceByIsinAsync_ShouldReturnPrice()
+        {
+            // Arrange
+            var isin = "US0378331005";
+            var expectedPrice = 123.45m;
+            var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(expectedPrice.ToString("G", CultureInfo.InvariantCulture))
+            };
+
+            // Configure the mock HttpMessageHandler to return the mock response for the specific request
+            _mockHttpMessageHandler
+                .SetupRequest(HttpMethod.Get, new Uri($"https://securities.dataprovider.com/securityprice/{isin}"))
+                .ReturnsAsync(mockResponse);
+
+            // Act
+            var actualPrice = await _securityService.GetPriceByIsinAsync(isin);
+
+            // Assert
+            Assert.Equal(expectedPrice, actualPrice);
+        }
+
+
+        [Fact]
+        public async Task SaveSecurityAsync_ShouldCallRepository()
+        {
+            // Arrange
+            var security = new Security
+            {
+                ISIN = "US0378331005",
+                Price = 123.45m
+            };
+
+            _mockRepo.Setup(repo => repo.SaveSecurityAsync(security)).Returns(Task.CompletedTask);
+
+            // Act
+            await _securityService.SaveSecurityAsync(security);
+
+            // Assert
+            _mockRepo.Verify(repo => repo.SaveSecurityAsync(It.Is<Security>(s => s.ISIN == security.ISIN && s.Price == security.Price)), Times.Once);
+        }
+
+
     }
 }

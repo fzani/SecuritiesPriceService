@@ -17,10 +17,38 @@ namespace BNP.SecuritiesPriceService.Services
 
         public async Task RetrieveAndStorePricesAsync(IEnumerable<string> isins)
         {
+            var securities = await RetrievePricesAsync(isins);
+            await StoreSecuritiesAsync(securities);
+        }
+
+        public async Task<decimal> GetPriceByIsinAsync(string isin)
+        {
+            return await GetPriceFromApiAsync(isin);
+        }
+
+        public async Task SaveSecurityAsync(Security security)
+        {
+            await _repository.SaveSecurityAsync(security);
+        }
+
+        private async Task<IEnumerable<Security>> RetrievePricesAsync(IEnumerable<string> isins)
+        {
+            var securities = new List<Security>();
+
             foreach (var isin in isins)
             {
                 var price = await GetPriceFromApiAsync(isin);
                 var security = new Security { ISIN = isin, Price = price };
+                securities.Add(security);
+            }
+
+            return securities;
+        }
+
+        private async Task StoreSecuritiesAsync(IEnumerable<Security> securities)
+        {
+            foreach (var security in securities)
+            {
                 await _repository.SaveSecurityAsync(security);
             }
         }
