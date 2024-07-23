@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace SecuritiesPriceService.Controllers;
+namespace BNP.SecuritiesPriceService.Controllers;
 
 [ApiController]
 [Route("[controller]")]

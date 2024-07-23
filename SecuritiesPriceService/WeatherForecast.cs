@@ -1,4 +1,4 @@
-namespace SecuritiesPriceService;
+namespace BNP.SecuritiesPriceService;
 
 public class WeatherForecast
 {

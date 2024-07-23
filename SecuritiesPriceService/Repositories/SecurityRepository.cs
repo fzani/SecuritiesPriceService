@@ -1,0 +1,2 @@
+
+namespace BNP.SecuritiesPriceService.Repositories;

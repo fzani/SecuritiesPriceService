@@ -1,0 +1,1 @@
+namespace BNP.SecuritiesPriceService.Data;
