@@ -2,19 +2,30 @@ using BNP.SecuritiesPriceService.Models;
 using BNP.SecuritiesPriceService.Repositories;
 using BNP.SecuritiesPriceService.Services;
 using Moq;
+using Moq.Contrib.HttpClient;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
-namespace BPN.Tests.Services
+
+namespace YourNamespace.Tests
 {
     public class SecurityServiceTests
     {
         private readonly Mock<ISecurityRepository> _mockRepo;
+        private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler;
         private readonly HttpClient _httpClient;
         private readonly SecurityService _securityService;
 
         public SecurityServiceTests()
         {
             _mockRepo = new Mock<ISecurityRepository>();
-            _httpClient = new HttpClient();
+            _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            _httpClient = _mockHttpMessageHandler.CreateClient();
+            _httpClient.BaseAddress = new Uri("https://securities.dataprovider.com/");
+
             _securityService = new SecurityService(_mockRepo.Object, _httpClient);
         }
 
@@ -23,6 +34,13 @@ namespace BPN.Tests.Services
         {
             // Arrange
             var isins = new List<string> { "US0378331005", "US02079K3059" };
+            var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("123.45")
+            };
+            _mockHttpMessageHandler.SetupAnyRequest()
+                .ReturnsAsync(mockResponse);
+
             _mockRepo.Setup(repo => repo.SaveSecurityAsync(It.IsAny<Security>())).Returns(Task.CompletedTask);
 
             // Act
